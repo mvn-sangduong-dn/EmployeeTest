@@ -19,6 +19,7 @@ public class EmployeeController {
     IEmployeeService employeeService;
 
 
+
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee){
         employeeService.saveEmployee(employee);
@@ -35,5 +36,11 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateEmployee(@RequestBody Employee employee){
+        employeeService.saveEmployee(employee);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
