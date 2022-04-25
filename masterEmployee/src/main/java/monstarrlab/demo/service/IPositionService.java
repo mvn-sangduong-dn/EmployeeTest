@@ -1,6 +1,8 @@
 package monstarrlab.demo.service;
 
 
-public interface IPositionService {
+import monstarrlab.demo.model.Position;
 
+public interface IPositionService {
+        Position getPositionById(long id);
 }
