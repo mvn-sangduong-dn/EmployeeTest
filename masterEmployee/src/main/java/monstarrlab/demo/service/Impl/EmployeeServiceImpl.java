@@ -1,6 +1,7 @@
 package monstarrlab.demo.service.Impl;
 
 
+
 import monstarrlab.demo.dto.EmployeeDTO;
 import monstarrlab.demo.model.Employee;
 import monstarrlab.demo.repository.IEmployeeRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,13 +24,26 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Autowired
     IEmployeeRepository iEmployeeRepository;
+
     @Autowired
     IPositionService iPositionService;
+
+
+
     @Override
     public void saveEmployee(Employee employee) {
         iEmployeeRepository.save(employee);
     }
 
+
+        @Override
+        public List<Employee> getEmployee(String name, String positionId) {
+            return iEmployeeRepository.getEmployee("%"+name+"%","%"+positionId+"%");
+    }
+        @Override
+        public void deleteEmployee(long id) {
+            iEmployeeRepository.deleteById(id);
+        }
     @Override
     public Map<String, String> checkAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult) {
         Map<String,String> errors=  new LinkedHashMap<>();
@@ -44,4 +59,5 @@ public class EmployeeServiceImpl implements IEmployeeService {
         iEmployeeRepository.save(employee);
         return null;
     }
+
 }
