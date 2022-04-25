@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -26,10 +27,11 @@ public class EmployeeController {
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@RequestBody @Validated EmployeeDTO employeeDTO,
                                             BindingResult bindingResult){
-        if(employeeService.checkAndSaveEmployee(employeeDTO,bindingResult) == null){
+        Map<String,String> erross = employeeService.checkAndSaveEmployee(employeeDTO,bindingResult);
+        if(erross == null){
         return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(employeeService.checkAndSaveEmployee(employeeDTO,bindingResult),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(erross,HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/list")
     public ResponseEntity<?> getListEmployee(@RequestParam(defaultValue = "") String name,
