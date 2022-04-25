@@ -1,6 +1,7 @@
 package monstarrlab.demo.service.Impl;
 
 
+
 import monstarrlab.demo.model.Employee;
 import monstarrlab.demo.repository.IEmployeeRepository;
 import monstarrlab.demo.service.IEmployeeService;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
+
     @Autowired
     IEmployeeRepository iEmployeeRepository;
 
@@ -24,4 +26,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
         public List<Employee> getEmployee(String name, String positionId) {
             return iEmployeeRepository.getEmployee("%"+name+"%","%"+positionId+"%");
     }
+        @Override
+        public void deleteEmployee(long id) {
+            iEmployeeRepository.deleteById(id);
+        }
 }

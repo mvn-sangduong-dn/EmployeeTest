@@ -1,6 +1,7 @@
 package monstarrlab.demo.controller;
 
 
+
 import monstarrlab.demo.model.Employee;
 import monstarrlab.demo.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class EmployeeController {
     @Autowired
     IEmployeeService employeeService;
 
+
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee){
         employeeService.saveEmployee(employee);
@@ -28,4 +30,10 @@ public class EmployeeController {
         List<Employee> employeeList = employeeService.getEmployee(name,positionId);
         return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteEmployee(@RequestParam long id){
+        employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
