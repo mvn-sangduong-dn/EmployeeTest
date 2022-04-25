@@ -16,6 +16,12 @@ import java.util.List;
 public class EmployeeController {
     @Autowired
     IEmployeeService employeeService;
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createEmployee(@RequestBody Employee employee){
+        employeeService.saveEmployee(employee);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @GetMapping("/list")
     public ResponseEntity<?> getListEmployee(@RequestParam(defaultValue = "") String name,
                                              @RequestParam(defaultValue = "") String positionId){
