@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
             iEmployeeRepository.deleteById(id);
         }
     @Override
-    public Map<String, String> checkAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult) {
+    public Map<String, String> checkCreateAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult) {
         Map<String,String> errors=  new LinkedHashMap<>();
         for (int i = 0; i < bindingResult.getAllErrors().size(); i++) {
             errors.put(bindingResult.getFieldErrors().get(i).getField(),bindingResult.getFieldErrors().get(i).getDefaultMessage());
@@ -58,6 +58,26 @@ public class EmployeeServiceImpl implements IEmployeeService {
         employee.setPosition(iPositionService.getPositionById(employeeDTO.getPosition()));
         iEmployeeRepository.save(employee);
         return null;
+    }
+
+    @Override
+    public Map<String, String> checkUpdateAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult) {
+        Map<String,String> errors=  new LinkedHashMap<>();
+        if(iEmployeeRepository.existsById(employeeDTO.getId())) {
+            for (int i = 0; i < bindingResult.getAllErrors().size(); i++) {
+                errors.put(bindingResult.getFieldErrors().get(i).getField(), bindingResult.getFieldErrors().get(i).getDefaultMessage());
+            }
+            if (bindingResult.hasErrors()) {
+                return errors;
+            }
+            Employee employee = new Employee();
+            BeanUtils.copyProperties(employeeDTO, employee);
+            employee.setPosition(iPositionService.getPositionById(employeeDTO.getPosition()));
+            iEmployeeRepository.save(employee);
+            return null;
+        }
+        errors.put("messErros","Id không tồn tại");
+        return errors;
     }
 
 }
