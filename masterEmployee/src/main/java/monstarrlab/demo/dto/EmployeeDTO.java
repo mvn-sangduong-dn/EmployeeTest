@@ -12,6 +12,9 @@ public class EmployeeDTO {
     private String birthday;
     private long position;
 
+    public EmployeeDTO() {
+    }
+
     public EmployeeDTO(long id, String name, String birthday, long position) {
         this.id = id;
         this.name = name;
