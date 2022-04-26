@@ -41,8 +41,10 @@ public class EmployeeController {
     }
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteEmployee(@RequestParam long id){
-        employeeService.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(employeeService.deleteEmployee(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Id không tồn tại",HttpStatus.BAD_REQUEST);
     }
     @PatchMapping("/update")
     public ResponseEntity<?> updateEmployee(@RequestBody @Validated EmployeeDTO employeeDTO,
