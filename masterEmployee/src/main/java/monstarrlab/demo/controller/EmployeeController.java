@@ -27,7 +27,7 @@ public class EmployeeController {
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@RequestBody @Validated EmployeeDTO employeeDTO,
                                             BindingResult bindingResult){
-        Map<String,String> erross = employeeService.checkAndSaveEmployee(employeeDTO,bindingResult);
+        Map<String,String> erross = employeeService.checkCreateAndSaveEmployee(employeeDTO,bindingResult);
         if(erross == null){
         return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -45,9 +45,13 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PatchMapping("/update")
-    public ResponseEntity<?> updateEmployee(@RequestBody Employee employee){
-        employeeService.saveEmployee(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> updateEmployee(@RequestBody @Validated EmployeeDTO employeeDTO,
+                                            BindingResult bindingResult){
+        Map<String,String> erross = employeeService.checkUpdateAndSaveEmployee(employeeDTO,bindingResult);
+        if(erross == null){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(erross,HttpStatus.BAD_REQUEST);
     }
 
 
