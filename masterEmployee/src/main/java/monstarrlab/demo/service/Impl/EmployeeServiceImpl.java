@@ -41,8 +41,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
             return iEmployeeRepository.getEmployee("%"+name+"%","%"+positionId+"%");
     }
         @Override
-        public void deleteEmployee(long id) {
+        public boolean deleteEmployee(long id) {
+        if(iEmployeeRepository.existsById(id)){
             iEmployeeRepository.deleteById(id);
+            return true;
+        }
+            return false;
         }
     @Override
     public Map<String, String> checkCreateAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult) {
