@@ -16,7 +16,8 @@ public interface IEmployeeService {
 
     List<Employee> getEmployee(String name, String positionId);
     void deleteEmployee(long id);
-    Map<String,String> checkAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult);
+    Map<String,String> checkCreateAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult);
 
 
+    Map<String, String> checkUpdateAndSaveEmployee(EmployeeDTO employeeDTO, BindingResult bindingResult);
 }
